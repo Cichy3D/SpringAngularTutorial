@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="webjars/angularjs/1.3.14/angular.min.js"></script>
+	<title>Angular tutorial</title>
+</head>
+
+<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+    }
+</style>
+
+<body ng-app="restApp" ng-controller="restCtrl" class="ng-cloak">
+
+	v5<br/>
+	Nazwa: {{nazwa}}<br/>
+	Val: {{val}}<br/>
+	Obj Txt: {{obj[0].txt}}
+	<br/>
+	<input ng-show="val" type="button" value="Plus Jeden" ng-click="plusJeden()" class="btn btn-success">
+
+<script>
+
+	var app = angular.module('restApp', []);
+	app.controller('restCtrl', function($scope, $http) {
+		
+		$http.post('post.do?parametr=wartosc', {nazwa: 'abcdeąęśf', val: 55, obj: [{id: 3, txt: 'jakiś tekst'}, {}]}).
+			  success(function(data, status, headers, config) {
+					console.log(data);	
+					console.log(data.val);
+					console.log(data.nazwa);
+					$scope.val = data.val;
+					$scope.nazwa = data.nazwa;
+					
+					$scope.obj = data.obj;
+			  }).
+			  error(function(data, status, headers, config) {
+				  console.log(data);
+			  });
+		
+		$scope.plusJeden = function(){
+			$scope.val ++;
+		}
+		
+		$scope.val = 1;
+		$scope.nazwa = 'ABC';
+		
+	});
+</script>
+
+</body>
+</html>
