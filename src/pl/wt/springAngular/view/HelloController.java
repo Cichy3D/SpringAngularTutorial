@@ -2,6 +2,7 @@ package pl.wt.springAngular.view;
 
 import java.io.UnsupportedEncodingException;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ public class HelloController {
 	
 	@RequestMapping(value = "hello", produces = "text/html;charset=UTF-8")
 	@ResponseBody
+	@Secured("ROLE_ADMIN")
 	public String doIt(@RequestParam(name="imie", required=false) String name) throws UnsupportedEncodingException{
 		if(name!=null){
 			return "hello "+name+"!!";
